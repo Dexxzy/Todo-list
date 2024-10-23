@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>liberal todo list</title>
+  <style>
+    html {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1e1e1e;
+      color: #ffffff;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #ffffff;
+    }
+
+    input[type="text"],
+    input[type="date"] {
+      padding: 10px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+      background-color: #333;
+      color: #ffffff;
+      border: none;
+    }
+
+    button {
+      padding: 10px 6px;
+      background-color: #ff6ddf;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-left: 5px;
+      margin-right: 5px;
+      border-radius: 2px;
+    }
+
+    button:hover {
+      background-color: #f312d9;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .completed label {
+      text-decoration: line-through;
+      color: #888;
+    }
+
+    label {
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+
+    .date {
+      font-size: 0.9em;
+      color: #aaa;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Liberal To-Do List</h1>
+  <input type="text" id="new-task" placeholder="Add a new task" />
+  <input type="date" id="task-date" />
+  <button onclick="addTask()">Add Task</button>
+  <ul id="task-list"></ul>
+
+  <script>
+    function addTask() {
+      const taskInput = document.getElementById("new-task");
+      const dateInput = document.getElementById("task-date");
+      const taskText = taskInput.value.trim();
+      const taskDate = dateInput.value;
+
+      if (taskText === "") {
+        alert("Please enter a task.");
+        return;
+      }
+
+      const taskList = document.getElementById("task-list");
+      const taskItem = document.createElement("li");
+
+      const checkBox = document.createElement("input");
+      checkBox.type = "checkbox";
+      checkBox.onclick = () => {
+        taskItem.classList.toggle("completed");
+      };
+
+      const label = document.createElement("label");
+      label.textContent = taskText;
+
+      if (taskDate) {
+        const dateLabel = document.createElement("span");
+        dateLabel.className = "date";
+        dateLabel.textContent = ` (Due: ${taskDate})`;
+        label.appendChild(dateLabel);
+      }
+
+      const deleteButton = document.createElement("button");
+      deleteButton.textContent = "Delete";
+      deleteButton.onclick = () => taskList.removeChild(taskItem);
+
+      taskItem.appendChild(checkBox);
+      taskItem.appendChild(label);
+      taskItem.appendChild(deleteButton);
+      taskList.appendChild(taskItem);
+
+      taskInput.value = "";
+      dateInput.value = "";
+    }
+  </script>
+</body>
+
+</html>
